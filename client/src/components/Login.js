@@ -25,12 +25,7 @@ const Login = props => {
     })
   }
 
-  // const handleSubmit = e => {
-  // 
-  // }
-
-  // render() {
-    // const { login } = this.props;
+  
     const { username, password, isSubmitting} = props;
 
     return (
