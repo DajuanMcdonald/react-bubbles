@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link } from 'react-router-dom'
 import { axiosWithAuth } from '../utils/AxiosWithAuth'
+import './styles/login.css'
 
 const Login = props => {
 
@@ -25,11 +26,11 @@ const Login = props => {
     })
   }
 
-  
+
     const { username, password, isSubmitting} = props;
 
     return (
-      <div className="col-md-6 col-md-offset-3">
+      <div className="login-form col-md-6 col-md-offset-3">
         <h1>Login</h1>
         <form name="form" onSubmit={login}>
           <div className="form-group">
