@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link } from 'react-router-dom'
+import { axiosWithAuth } from '../utils/AxiosWithAuth'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -20,18 +21,27 @@ export default class Login extends React.Component {
     this.setState({ [name]: value})
   }
 
+  login = e => {
+    // e.preventDefault();
+    axiosWithAuth().post('/api/login', this.props)
+    .then(res => {
+      localStorage.setItem('token', res.data.payload)
+      this.props.history.push('/bubble-page')
+    })
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
     this.setState({ isSubmitting: true });
     const {username, password} = this.state;
     if (username && password) {
-      this.props.logIn(username, password);
+      this.login(username, password);
     }
   }
 
   render() {
-    const { logIn } = this.props;
+    const { login } = this.props;
     const { username, password, isSubmitting} = this.state;
 
     return (
