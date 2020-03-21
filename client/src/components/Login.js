@@ -2,60 +2,49 @@ import React from 'react'
 import {Link } from 'react-router-dom'
 import { axiosWithAuth } from '../utils/AxiosWithAuth'
 
-export default class Login extends React.Component {
-  constructor(props) {
-    super(props)
+const Login = props => {
 
-    // always bailout with rest
-    // this.props.logout();
-    this.state = {
+    const [credential, setCredentials ] = React.useState({
       username: '',
       password: '',
       isSubmitting: false
-    }
+    })
 
+  
+
+  const handleChange = e => {
+    setCredentials({...credential, [e.target.name]: e.target.value})
   }
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value})
-  }
-
-  login = e => {
+  const login = e => {
     // e.preventDefault();
-    axiosWithAuth().post('/api/login', this.props)
-    .then(res => {
-      localStorage.setItem('token', res.data.payload)
+    axiosWithAuth().post('/api/login', credential)
+    .then(res => {localStorage
+      .setItem('token', res.data.payload)
       this.props.history.push('/bubble-page')
     })
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
+  // const handleSubmit = e => {
+  // 
+  // }
 
-    this.setState({ isSubmitting: true });
-    const {username, password} = this.state;
-    if (username && password) {
-      this.login(username, password);
-    }
-  }
-
-  render() {
-    const { login } = this.props;
-    const { username, password, isSubmitting} = this.state;
+  // render() {
+    // const { login } = this.props;
+    const { username, password, isSubmitting} = props;
 
     return (
       <div className="col-md-6 col-md-offset-3">
         <h1>Login</h1>
-        <form name="form" onSubmit={this.handleSubmit}>
-          <div className={'form-group' + (isSubmitting && !username ? 'has-error' : '')}>
+        <form name="form" onSubmit={login}>
+          <div className="form-group">
             <label>Username</label>
-            <input type="text" name="username" value={username} onChange={this.handleChange} />
+            <input type="text" name="username" onChange={handleChange}/>
             {isSubmitting && !username && <div>Username required</div>}
           </div>
-          <div className={'form-group' + (isSubmitting && !password ? 'had-error' : '')}>
+          <div className='form-group'>
             <label>Password</label>
-            <input type="password" name="password" value={password} onChange={this.handleChange} />
+            <input type="password" name="password" onChange={handleChange}/>
             {isSubmitting && !password && <div>Password required</div>}
 
           </div>
@@ -71,4 +60,5 @@ export default class Login extends React.Component {
       </div>
     )
   }
-}
+// }
+export default Login;
