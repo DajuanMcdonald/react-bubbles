@@ -17,11 +17,11 @@ const Login = props => {
   }
 
   const login = e => {
-    // e.preventDefault();
+    e.preventDefault();
     axiosWithAuth().post('/api/login', credential)
     .then(res => {localStorage
       .setItem('token', res.data.payload)
-      this.props.history.push('/bubble-page')
+      props.history.push('/bubble-page')
     })
   }
 
